@@ -143,7 +143,7 @@
                             </div>
 
                             <canvas id="pacmanCanvas" width="616" height="660"></canvas>
-                        <canvas id="pacmanCanvas"></canvas>
+                        </div>
                     </div>
 
                     <button id="exit-btn" onclick="exitToMenu()" class="secondary-btn" style="max-width: 200px; margin-top: 15px; background: #ff4d4d; color: white;">Exit Game</button>
@@ -166,7 +166,7 @@
 
     <script>
         // IF USING NGROK FOR THE PRESENTATION: Replace localhost string with your live tunnel path
- const socket = io("http://192.168.0.217:5000");
+        const socket = io("http://localhost:5000"); 
         
         let myUsername = "", currentRoomCode = "", currentQuestionIndex = 0, matchTargetGlobal = "";
         let memoryCards = [], flippedIndices = [], totalMoves = 0, matchedPairsCount = 0;
@@ -496,33 +496,6 @@
             const win = document.getElementById("chat-window"); win.innerHTML += `<p style="margin-bottom: 5px;"><b>${data.user}:</b> ${data.msg}</p>`;
             win.scrollTop = win.scrollHeight;
         });
-        // --- TOUCH SWIPE CONTROLS ---
-let touchStartX = 0;
-let touchStartY = 0;
-
-document.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].clientX;
-    touchStartY = e.changedTouches[0].clientY;
-}, { passive: false });
-
-document.addEventListener('touchend', (e) => {
-    let touchEndX = e.changedTouches[0].clientX;
-    let touchEndY = e.changedTouches[0].clientY;
-    
-    let diffX = touchEndX - touchStartX;
-    let diffY = touchEndY - touchStartY;
-
-    // Check if horizontal swipe is greater than vertical swipe
-    if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (Math.abs(diffX) > 30) { // Minimum swipe distance
-            socket.emit("changeDirection", diffX > 0 ? "right" : "left");
-        }
-    } else {
-        if (Math.abs(diffY) > 30) { // Minimum swipe distance
-            socket.emit("changeDirection", diffY > 0 ? "down" : "up");
-        }
-    }
-}, { passive: false });
     </script>
 </body>
 </html>
